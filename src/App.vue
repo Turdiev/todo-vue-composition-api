@@ -1,26 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <div class="flex justify-start my-10 overflow-x-auto">
+      <ColumnComponent
+        v-for="(task, index) in visibleTodos"
+        :key="`${task.title}_${index}`"
+        :list="task"
+        :index="index"
+        class="mr-6"
+      />
+      <div class="app__button w-60 h-8">
+        <ColumnBtn
+            title="Создать колонку"
+            @click="onAddTodo()"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup lang="ts">
+import {computed} from "vue";
+import {useTodos} from "@/store/todos";
+import ColumnComponent from "@/components/Column/ColumnComponent.vue"
+import ColumnBtn from "@/components/Column/ColumnBtn.vue"
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+const store = useTodos()
+
+const visibleTodos = computed(() => store.visibleTodos)
+
+const onAddTodo = () => {
+  store.addTodo({
+    title: 'Заголовок',
+    tasks: []
+  })
 }
+
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" scoped>
+.app {
+  &__button {
+    min-width: 168px;
+  }
 }
 </style>
