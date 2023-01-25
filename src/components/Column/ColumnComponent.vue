@@ -11,19 +11,25 @@
       <div class="flex flex-col items-center px-2">
         <ColumnBtn
           title="Добавить"
-          @click="onAddTask(props.index,{
-            name: 'Введите название'
-          })"
+          @click="onAddTask"
         />
-        <ColumnTask
-            v-for="(task, index) in props.list.tasks"
-            :key="task.name"
-            :name="task.name"
-            :taskID="index"
-            :index="props.index"
-            @update="handleUpdateTask"
-            @remove="handleRemoveTask"
-        />
+        <draggable
+            class="list-group"
+            :list="props.list.tasks"
+            group="task"
+            itemKey="id"
+        >
+          <template #item="{ element, index }">
+            <ColumnTask
+              :name="element.name"
+              :taskID="index"
+              :index="props.index"
+              class="list-group-item"
+              @update="handleUpdateTask"
+              @remove="handleRemoveTask"
+            />
+          </template>
+        </draggable>
       </div>
     </div>
   </div>
@@ -35,6 +41,8 @@ import {useTodos} from "@/store/todos";
 import ColumnTask from "@/components/Column/ColumnTask.vue";
 import ColumnBtn from "@/components/Column/ColumnBtn.vue";
 import ColumnHead from "@/components/Column/ColumnHead.vue";
+import draggable from "vuedraggable";
+
 interface Props {
   list: {
     index: string | number,
@@ -43,12 +51,15 @@ interface Props {
   }
   index: number
 }
-
 const props = defineProps<Props>()
 
 const store = useTodos()
-const onAddTask = store.addTask
-
+const onAddTask = () => {
+  store.addTask(props.index,{
+    id: Math.floor(100 + Math.random() * 900),
+    name: 'Введите название'
+  })
+}
 const handleUpdateHead = (todo: any) => {
   store.updateTodo(todo)
 }

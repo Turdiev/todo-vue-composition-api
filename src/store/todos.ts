@@ -8,6 +8,7 @@ export const useTodos = defineStore('todos', {
                 title: 'Заголовок',
                 tasks: [
                     {
+                        id: 111,
                         name: 'Введите название'
                     }
                 ]
@@ -54,5 +55,6 @@ interface ToDo {
 }
 
 interface Tasks {
+    id: number
     name: string
 }
