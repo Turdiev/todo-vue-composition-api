@@ -13,23 +13,24 @@
           title="Добавить"
           @click="onAddTask"
         />
-        <draggable
-            class="list-group"
+        <Draggable
             :list="props.list.tasks"
             group="task"
             itemKey="id"
+            ghost-class="ghost"
+            class="list-group"
         >
           <template #item="{ element, index }">
             <ColumnTask
               :name="element.name"
               :taskID="index"
               :index="props.index"
-              class="list-group-item"
+              class="list-group-item move-draggable"
               @update="handleUpdateTask"
               @remove="handleRemoveTask"
             />
           </template>
-        </draggable>
+        </Draggable>
       </div>
     </div>
   </div>
@@ -41,7 +42,7 @@ import {useTodos} from "@/store/todos";
 import ColumnTask from "@/components/Column/ColumnTask.vue";
 import ColumnBtn from "@/components/Column/ColumnBtn.vue";
 import ColumnHead from "@/components/Column/ColumnHead.vue";
-import draggable from "vuedraggable";
+import Draggable from "vuedraggable";
 
 interface Props {
   list: {
@@ -86,5 +87,14 @@ const handleRemoveTask = (task: any) => {
     height: calc(100% - 56px);
     overflow: auto;
   }
+}
+
+.ghost {
+  background: #c8ebfb;
+  opacity: 0.5;
+}
+
+.move-draggable {
+  cursor: move;
 }
 </style>
