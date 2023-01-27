@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <div
+      ref="dropdown"
       class="cursor-pointer"
       @click="handelAction"
     >
@@ -47,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, onMounted, onDeactivated} from "vue";
 
 const props =defineProps<{
   color: string
@@ -55,19 +56,36 @@ const props =defineProps<{
 const emit = defineEmits(['change', 'remove'])
 
 const active = ref(false)
+const dropdown = ref(null)
+
+onMounted(() =>{
+  document.addEventListener('click', hideDropDown)
+})
+
+onDeactivated(() => {
+  document.addEventListener('click', hideDropDown)
+})
 
 const handelAction = ():void => {
   active.value = !active.value
 }
 
-const handleEdit = () => {
+const handleEdit = ():void => {
   emit('change', false)
   active.value = !active.value
 }
 
-const handleRemove = () => {
+const handleRemove = ():void => {
   emit('remove')
   active.value = !active.value
+}
+
+const hideDropDown = (evt: { target: any; }):void => {
+  let el = dropdown.value
+  let target = evt.target;
+  if (el !== target && !el?.contains(target)){
+    active.value = false
+  }
 }
 </script>
 

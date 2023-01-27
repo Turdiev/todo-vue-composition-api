@@ -21,6 +21,7 @@
       />
     </div>
     <DropDowns
+      :key="taskID"
       color="black"
       @change="handleEdit"
       @remove="handleRemove"
