@@ -3,31 +3,25 @@ import { defineStore } from 'pinia'
 export const useTodos = defineStore('todos', {
 
     state: () => ({
-        todoList: [
-            {
-                title: 'Заголовок',
-                tasks: [
-                    {
-                        id: 111,
-                        name: 'Введите название'
-                    }
-                ]
-            },
-        ]
+        todoList: [] as ToDo[]
     }),
 
     getters: {
-      visibleTodos(state) {
+      visibleTodos(state):ToDo[] {
           return state.todoList
       }
     },
 
     actions: {
+        initTodos(localTodo: ToDo[]) {
+          this.todoList = localTodo
+        },
+
         addTodo(todo: ToDo) {
             this.todoList.push(todo)
         },
 
-        updateTodo(todo: any) {
+        updateTodo(todo: Tasks) {
             this.todoList[todo.id].title = todo.name
         },
 
@@ -51,7 +45,7 @@ export const useTodos = defineStore('todos', {
 
 interface ToDo {
     title: string,
-    tasks: []
+    tasks: Tasks[]
 }
 
 interface Tasks {

@@ -19,14 +19,24 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from "vue";
-import {useTodos} from "@/store/todos";
+
+import {computed, onMounted, watchEffect} from "vue"
+import {useTodos} from "@/store/todos"
+import {loadTodos, storeTodos} from "@/services/todo-local"
 import ColumnComponent from "@/components/Column/ColumnComponent.vue"
 import ColumnBtn from "@/components/Column/ColumnBtn.vue"
 
 const store = useTodos()
 
 const visibleTodos = computed(() => store.visibleTodos)
+
+onMounted(() => {
+  store.initTodos(loadTodos())
+
+  watchEffect(():void => {
+    storeTodos(store.$state.todoList)
+  })
+})
 
 const onAddTodo = () => {
   store.addTodo({
