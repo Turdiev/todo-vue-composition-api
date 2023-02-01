@@ -5,6 +5,7 @@
 ## Tools
 
 - [Vue CLI](https://cli.vuejs.org/)
+- [Typescript](https://www.typescriptlang.org/)
 - [Composition Api](https://composition-api.vuejs.org/#summary)
 - [Pinia](https://pinia.vuejs.org/introduction.html)
 - [vue.draggable.next](https://github.com/SortableJS/vue.draggable.next)
