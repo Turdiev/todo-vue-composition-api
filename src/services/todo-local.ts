@@ -5,7 +5,7 @@ const initialData = [
         tasks: []
     }
 ]
-const localStore = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY) || '[]')
+const localStore = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY) ?? '[]')
 
 export const loadTodos = () => localStore.length !== 0 ? localStore : initialData
 export const storeTodos = (todos:Todo):void => {
