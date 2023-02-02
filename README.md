@@ -1,5 +1,6 @@
 # Todo-app built with Vue 3 Composition Api and Pinia
 
+![Todo Vue3](C:\_work\to-do-app\src\assets\image\screenshot.png "Todo Vue3")
 [Watch here](https://turdiev.github.io/todo-vue-composition-api/)
 
 ## Tools
