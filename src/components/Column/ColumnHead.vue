@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-10 bg-slate-600 rounded-t-lg text-left px-2 py-1">
+  <div class="flex justify-between w-full h-10 bg-slate-600 rounded-t-lg text-left px-4 py-1">
     <span class="text-white font-bold ">
       <input
         ref="input"

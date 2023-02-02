@@ -22,7 +22,7 @@
         >
           <template #item="{ element, index }">
             <ColumnTask
-              :name="element.name"
+              :task="element"
               :taskID="index"
               :index="props.index"
               class="list-group-item move-draggable"
@@ -58,7 +58,8 @@ const store = useTodos()
 const onAddTask = () => {
   store.addTask(props.index,{
     id: Math.floor(100 + Math.random() * 900),
-    name: 'Введите название'
+    name: 'Введите название',
+    completed: false
   })
 }
 const handleUpdateHead = (todo: any) => {

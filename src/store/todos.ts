@@ -34,7 +34,7 @@ export const useTodos = defineStore('todos', {
         },
 
         updateTask(task: any) {
-            this.todoList[task.index].tasks[task.id].name = task.name
+            this.todoList[task.index].tasks[task.id] = task
         },
 
         removeTask(index:number, taskId: number) {
@@ -51,4 +51,5 @@ interface ToDo {
 interface Tasks {
     id: number
     name: string
+    completed: boolean
 }

@@ -5,7 +5,7 @@
       class="cursor-pointer"
       @click="handelAction"
     >
-      <svg class="w-5 h-5 mt-1" :class="`stroke-${props.color}`" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <svg class="w-6 h-6 hover:stroke-blue-500 transition-all" :class="`stroke-${props.color}`" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
     </div>

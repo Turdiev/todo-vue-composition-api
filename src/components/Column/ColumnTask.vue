@@ -1,12 +1,24 @@
 <template>
-  <div class="flex justify-between task bg-gray-300 rounded-lg mt-2 px-2 transition ease-in-out hover:bg-gray-400">
+  <div
+      class="flex justify-between task bg-gray-400 rounded-lg mt-2 px-2 pt-2 transition-all hover:bg-slate-400"
+      :class="{'bg-gray-500': props.task.completed}"
+  >
+    <div
+        class="cursor-pointer"
+        @click="handleCompleted"
+    >
+      <svg class="w-6 h-6" :class="{'stroke-green-600': props.task.completed}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
     <div class="w-48 h-full ">
       <span
         v-if="editing"
-        class="block px-3 py-2 text-gray-900 whitespace-normal sm:text-sm"
+        class="block px-3 text-gray-900 whitespace-normal cursor-pointer sm:text-base"
+        :class="{'line-through text-gray-600': props.task.completed}"
         @dblclick="handleEdit(false)"
       >
-          {{ props.name }}
+          {{ props.task.name }}
       </span>
       <input
         v-show="!editing"
@@ -15,7 +27,7 @@
         type="text"
         :disabled="editing"
         placeholder="Введите название задачи ..."
-        class="relative block w-full appearance-none rounded-none rounded-b-md bg-transparent px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+        class="relative block w-full appearance-none rounded-none text-white rounded-b-md bg-transparent px-3 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
         @input="handleChange"
         @blur="handleBlur"
       />
@@ -33,28 +45,44 @@ import {ref} from "vue";
 import DropDowns from "@/components/DropDowns.vue";
 
 const props = defineProps<{
-  name: string,
+  task: {
+    name: string,
+    completed: boolean
+  },
   taskID: number,
   index: number
 }>()
 const emit = defineEmits(['update', 'remove'])
 
-const nameInput = ref(props.name)
+const nameInput = ref(props.task.name)
 const editing = ref(true)
 const input = ref(null)
 
 const handleChange = (event: { target: { value: string; }; }) => (nameInput.value = event.target.value)
 const handleBlur = () => {
   if(nameInput.value !== '') {
-    emit('update',  {index:props.index, name: nameInput.value, id: props.taskID })
+    emit('update',  {
+      index:props.index,
+      id: props.taskID,
+      name: nameInput.value,
+      completed: props.task.completed
+    })
   }
   else {
-    nameInput.value = props.name
+    nameInput.value = props.task.name
   }
   editing.value = true
 }
 const handleRemove = () => {
   emit('remove', {index:props.index, taskID:props.taskID})
+}
+const handleCompleted = () => {
+  emit('update',  {
+    index:props.index,
+    id: props.taskID,
+    name: props.task.name,
+    completed: !props.task.completed
+  })
 }
 const handleEdit = (isEdit: boolean) => {
   editing.value = isEdit
